@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teacher Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Sarabun', sans-serif;
+  min-height: 100vh;
+  background: #f8fafc;
+  color: #1f2937;
+}
+
+.topbar {
+  background: linear-gradient(90deg, #f97316, #ec4899, #8b5cf6);
+  padding: 16px 20px;
+  display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; z-index: 100;
+  box-shadow: 0 4px 20px rgba(236,72,153,0.3);
+}
+.topbar-title { color: white; font-size: 18px; font-weight: 800; display: flex; align-items: center; gap: 8px; }
+
+.stats {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 12px; padding: 20px 16px 0;
+}
+@media(max-width:600px){ .stats { grid-template-columns: repeat(2,1fr); } }
+.stat-card {
+  background: white; border-radius: 18px; padding: 16px 14px;
+  text-align: center;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  border-top: 4px solid transparent;
+}
+.stat-card:nth-child(1) { border-color: #f97316; }
+.stat-card:nth-child(2) { border-color: #ec4899; }
+.stat-card:nth-child(3) { border-color: #8b5cf6; }
+.stat-card:nth-child(4) { border-color: #ef4444; }
+.stat-num { font-size: 28px; font-weight: 800; line-height: 1; }
+.stat-card:nth-child(1) .stat-num { color: #f97316; }
+.stat-card:nth-child(2) .stat-num { color: #ec4899; }
+.stat-card:nth-child(3) .stat-num { color: #8b5cf6; }
+.stat-card:nth-child(4) .stat-num { color: #ef4444; }
+.stat-label { font-size: 12px; color: #94a3b8; margin-top: 4px; font-weight: 600; }
+
+.tabs {
+  display: flex; gap: 6px;
+  padding: 16px 16px 0;
+  overflow-x: auto; scrollbar-width: none;
+}
+.tabs::-webkit-scrollbar { display: none; }
+.tab {
+  flex-shrink: 0; padding: 10px 18px;
+  border-radius: 50px; font-family: 'Sarabun', sans-serif;
+  font-size: 13px; font-weight: 700; cursor: pointer;
+  border: 2px solid #e5e7eb; background: white;
+  color: #94a3b8; transition: all 0.2s;
+}
+.tab.active {
+  background: linear-gradient(90deg, #ec4899, #8b5cf6);
+  color: white; border-color: transparent;
+  box-shadow: 0 4px 14px rgba(236,72,153,0.35);
+}
+
+.panel { display: none; padding: 16px; }
+.panel.active { display: block; }
+
+.section-card {
+  background: white; border-radius: 20px;
+  padding: 20px; margin-bottom: 16px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+}
+.section-title {
+  font-size: 15px; font-weight: 800; margin-bottom: 14px;
+  display: flex; align-items: center; gap: 8px; color: #1f2937;
+}
+.pill {
+  display: inline-block; padding: 3px 10px; border-radius: 50px;
+  font-size: 11px; font-weight: 700; color: white;
+}
+.pill-orange { background: linear-gradient(90deg,#f97316,#ec4899); }
+.pill-pink   { background: linear-gradient(90deg,#ec4899,#8b5cf6); }
+.pill-green  { background: linear-gradient(90deg,#10b981,#059669); }
+.pill-cyan   { background: linear-gradient(90deg,#06b6d4,#3b82f6); }
+
+label { display: block; font-size: 13px; font-weight: 700; color: #374151; margin-bottom: 6px; }
+input[type=text], input[type=number], input[type=url], select, textarea {
+  width: 100%; padding: 12px 14px;
+  border: 2px solid #e5e7eb; border-radius: 12px;
+  font-size: 15px; font-family: 'Sarabun', sans-serif;
+  color: #1f2937; background: #f9fafb;
+  transition: all 0.2s; outline: none; -webkit-appearance: none;
+}
+textarea { resize: vertical; min-height: 80px; line-height: 1.6; }
+input[type=text]:focus, input[type=number]:focus, input[type=url]:focus, select:focus, textarea:focus {
+  border-color: #ec4899; background: #fff;
+  box-shadow: 0 0 0 3px rgba(236,72,153,0.1);
+}
+.mb8  { margin-bottom: 8px; }
+.mb14 { margin-bottom: 14px; }
+.form-row { display: flex; gap: 8px; }
+.form-row input, .form-row select { flex: 1; margin-bottom: 0; }
+
+.btn {
+  padding: 12px 20px;
+  background: linear-gradient(90deg, #f97316, #ec4899);
+  color: white; border: none; border-radius: 12px;
+  font-size: 14px; font-weight: 800;
+  font-family: 'Sarabun', sans-serif;
+  cursor: pointer; transition: transform 0.15s, box-shadow 0.15s;
+  box-shadow: 0 4px 14px rgba(236,72,153,0.35);
+  white-space: nowrap;
+}
+.btn:active { transform: scale(0.97); }
+.btn-purple { background: linear-gradient(90deg, #8b5cf6, #6366f1); box-shadow: 0 4px 14px rgba(139,92,246,0.35); }
+.btn-green  { background: linear-gradient(90deg, #10b981, #059669); box-shadow: 0 4px 14px rgba(16,185,129,0.3); }
+.btn-cyan   { background: linear-gradient(90deg, #06b6d4, #3b82f6); box-shadow: 0 4px 14px rgba(6,182,212,0.3); }
+.btn-red    { background: #dc2626; box-shadow: 0 4px 14px rgba(220,38,38,0.3); padding: 8px 14px; font-size: 13px; }
+.btn-full   { width: 100%; padding: 14px; font-size: 16px; }
+
+/* Classroom Cards */
+.room-card {
+  border: 2px solid #f3f4f6; border-radius: 16px;
+  padding: 16px; margin-bottom: 12px; background: #fafafa;
+  transition: border-color 0.2s;
+}
+.room-card:hover { border-color: #ec4899; }
+.room-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.room-name { font-size: 16px; font-weight: 800; }
+.room-count {
+  background: linear-gradient(90deg,rgba(236,72,153,0.1),rgba(139,92,246,0.1));
+  color: #ec4899; border: 1.5px solid rgba(236,72,153,0.2);
+  padding: 4px 12px; border-radius: 50px; font-size: 12px; font-weight: 700;
+}
+.student-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+.student-chip {
+  display: flex; align-items: center; gap: 4px;
+  padding: 5px 12px; border-radius: 50px;
+  background: #f0fdf4; color: #16a34a;
+  border: 1.5px solid #bbf7d0; font-size: 12px; font-weight: 700;
+}
+.no-student { font-size: 13px; color: #94a3b8; margin-bottom: 10px; }
+.room-actions { display: flex; justify-content: flex-end; }
+
+.chip-list { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip {
+  display: flex; align-items: center; gap: 6px;
+  padding: 8px 14px; border-radius: 50px;
+  background: linear-gradient(90deg,rgba(249,115,22,0.1),rgba(236,72,153,0.1));
+  border: 1.5px solid rgba(236,72,153,0.2);
+  font-size: 13px; font-weight: 700; color: #ec4899;
+}
+
+/* Assignment Cards */
+.assign-card {
+  border: 2px solid #f3f4f6; border-radius: 16px;
+  padding: 14px 16px; margin-bottom: 10px;
+  display: flex; align-items: center; gap: 10px;
+  background: #fafafa; transition: border-color 0.2s; flex-wrap: wrap;
+}
+.assign-card:hover { border-color: #ec4899; }
+.assign-info { flex: 1; min-width: 0; }
+.assign-name { font-size: 15px; font-weight: 700; }
+.assign-room { font-size: 12px; color: #94a3b8; margin-top: 2px; }
+.badge { flex-shrink:0; padding: 5px 12px; border-radius: 50px; font-size: 12px; font-weight: 700; }
+.badge-ok   { background: #dcfce7; color: #16a34a; }
+.badge-warn { background: #fee2e2; color: #dc2626; }
+.notify-link {
+  flex-shrink: 0; padding: 8px 12px;
+  background: #fff7ed; border: 1.5px solid #fed7aa;
+  border-radius: 10px; font-size: 12px; font-weight: 700;
+  color: #f97316; text-decoration: none; white-space: nowrap; transition: background 0.2s;
+}
+.notify-link:hover { background: #ffedd5; }
+
+/* Post Cards */
+.post-card {
+  border: 2px solid #e0f2fe; border-radius: 16px;
+  padding: 14px 16px; margin-bottom: 10px; background: #f0f9ff;
+  transition: border-color 0.2s;
+}
+.post-card:hover { border-color: #06b6d4; }
+.post-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; margin-bottom: 8px; }
+.post-title { font-size: 15px; font-weight: 800; color: #0c4a6e; }
+.post-room { font-size: 12px; color: #0369a1; margin-top: 2px; }
+.post-content { font-size: 13px; color: #374151; line-height: 1.6; margin-bottom: 8px; }
+.post-link-btn {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 6px 14px; background: #dbeafe; color: #1d4ed8;
+  border-radius: 8px; font-size: 13px; font-weight: 700;
+  text-decoration: none; transition: background 0.2s;
+}
+.post-link-btn:hover { background: #bfdbfe; }
+
+/* Submission Cards */
+.sub-card {
+  border: 2px solid #f3f4f6; border-radius: 16px;
+  padding: 14px 16px; margin-bottom: 10px; background: #fafafa;
+}
+.sub-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.sub-avatar {
+  width: 40px; height: 40px; border-radius: 12px;
+  background: linear-gradient(135deg,#f97316,#ec4899);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; font-weight: 800; color: white; flex-shrink: 0;
+}
+.sub-name { font-size: 15px; font-weight: 700; }
+.sub-assign { font-size: 12px; color: #94a3b8; margin-top: 1px; }
+.score-badge {
+  margin-left: auto; padding: 5px 12px; border-radius: 50px;
+  background: linear-gradient(90deg,rgba(139,92,246,0.1),rgba(99,102,241,0.1));
+  color: #8b5cf6; font-size: 13px; font-weight: 800;
+  border: 1.5px solid rgba(139,92,246,0.2);
+}
+.sub-content {
+  font-size: 13px; color: #6b7280; background: #f9fafb;
+  border: 1.5px solid #e5e7eb; border-radius: 10px;
+  padding: 10px 12px; margin-bottom: 10px; line-height: 1.6;
+}
+.file-link {
+  display: inline-flex; align-items: center; gap: 5px;
+  color: #8b5cf6; font-size: 13px; font-weight: 700;
+  text-decoration: none; padding: 6px 12px;
+  background: rgba(139,92,246,0.1); border-radius: 8px;
+  margin-bottom: 10px; transition: background 0.2s;
+}
+.file-link:hover { background: rgba(139,92,246,0.18); }
+.grade-row { display: flex; align-items: center; gap: 8px; }
+.grade-input { width: 90px !important; text-align: center; font-weight: 700 !important; font-size: 16px !important; }
+
+.search-wrap { position: relative; margin-bottom: 14px; }
+.search-wrap::before { content:'🔍'; position:absolute; left:14px; top:50%; transform:translateY(-50%); pointer-events:none; }
+.search-input {
+  width: 100%; padding: 12px 14px 12px 42px;
+  border: 2px solid #e5e7eb; border-radius: 12px;
+  font-size: 14px; font-family: 'Sarabun', sans-serif;
+  background: white; color: #1f2937; outline: none; transition: all 0.2s;
+}
+.search-input:focus { border-color: #ec4899; box-shadow: 0 0 0 3px rgba(236,72,153,0.1); }
+
+.export-card {
+  background: linear-gradient(135deg,#f0fdf4,#dcfce7);
+  border: 2px solid #bbf7d0; border-radius: 16px; padding: 18px; margin-bottom: 14px;
+}
+.export-card p { font-size: 13px; color: #166534; margin-bottom: 14px; line-height: 1.6; }
+.export-stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin-top: 14px; }
+.export-stat { background: white; border-radius: 12px; padding: 12px; text-align: center; border: 1.5px solid #bbf7d0; }
+.export-stat-num { font-size: 22px; font-weight: 800; color: #10b981; }
+.export-stat-label { font-size: 11px; color: #6b7280; margin-top: 2px; font-weight: 600; }
+
+.empty { text-align: center; padding: 32px; color: #94a3b8; }
+.empty-icon { font-size: 40px; margin-bottom: 8px; }
+.empty p { font-size: 14px; }
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="topbar-title">👩‍🏫 Teacher Dashboard</div>
+  <a href="/logout" style="color:white;font-size:13px;text-decoration:none;">ออกจากระบบ</a>
+</div>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat-card">
+    <div class="stat-num">{{ classrooms|length }}</div>
+    <div class="stat-label">🏫 ห้องเรียน</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-num">{{ assignments|length }}</div>
+    <div class="stat-label">📋 งานทั้งหมด</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-num">{{ submissions|length }}</div>
+    <div class="stat-label">📤 ส่งแล้ว</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-num">{{ missing_counts.values()|sum }}</div>
+    <div class="stat-label">⚠️ ยังไม่ส่ง</div>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="tabs">
+  <button class="tab active" onclick="switchTab('rooms')">🏫 ห้องเรียน</button>
+  <button class="tab" onclick="switchTab('assign')">📋 งาน</button>
+  <button class="tab" onclick="switchTab('posts')">📢 โพสต์</button>
+  <button class="tab" onclick="switchTab('grade')">✍️ ตรวจงาน</button>
+  <button class="tab" onclick="switchTab('export')">📊 ส่งออก</button>
+</div>
+
+<!-- PANEL: ROOMS -->
+<div class="panel active" id="panel-rooms">
+  <div class="section-card">
+    <div class="section-title"><span class="pill pill-orange">ใหม่</span> สร้างห้องเรียน</div>
+    <form method="POST" action="/create_classroom">
+      <div class="form-row">
+        <input type="text" name="name" placeholder="ชื่อห้องเรียน เช่น ม.2/1">
+        <button type="submit" class="btn">➕ สร้าง</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="section-card">
+    <div class="section-title">🏫 ห้องเรียนทั้งหมด</div>
+    {% if classrooms %}
+      {% for c in classrooms %}
+      <div class="room-card">
+        <div class="room-header">
+          <div class="room-name">🏫 {{ c.name }}</div>
+          <div class="room-count">{{ classroom_students[c.id]|length }} คน</div>
+        </div>
+        {% if classroom_students[c.id] %}
+        <div class="student-chips">
+          {% for s in classroom_students[c.id] %}
+          <div class="student-chip">🎓 {{ s.username }}</div>
+          {% endfor %}
+        </div>
+        {% else %}
+        <div class="no-student">ยังไม่มีนักเรียนในห้องนี้</div>
+        {% endif %}
+        <div class="room-actions">
+          <a href="/delete_classroom/{{ c.id }}"
+             onclick="return confirm('ลบห้อง {{ c.name }}? นักเรียนในห้องจะถูกย้ายออก')">
+            <button class="btn btn-red">🗑️ ลบห้อง</button>
+          </a>
+        </div>
+      </div>
+      {% endfor %}
+    {% else %}
+    <div class="empty"><div class="empty-icon">🏫</div><p>ยังไม่มีห้องเรียน</p></div>
+    {% endif %}
+  </div>
+</div>
+
+<!-- PANEL: ASSIGNMENTS -->
+<div class="panel" id="panel-assign">
+  <div class="section-card">
+    <div class="section-title"><span class="pill pill-pink">ใหม่</span> มอบหมายงาน</div>
+    <form method="POST" action="/create_assignment">
+      <label class="mb8">📝 ชื่องาน</label>
+      <input type="text" name="title" placeholder="เช่น แบบฝึกหัดบทที่ 1" class="mb8">
+      <div class="form-row">
+        <select name="classroom_id" required>
+          <option value="">-- เลือกห้องเรียน --</option>
+          {% for c in classrooms %}
+          <option value="{{ c.id }}">{{ c.name }}</option>
+          {% endfor %}
+        </select>
+        <button type="submit" class="btn">➕ สร้าง</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="section-card">
+    <div class="section-title">📋 งานที่มอบหมาย</div>
+    {% if assignments %}
+      {% for a in assignments %}
+      {% set missing = missing_counts[a.id] %}
+      <div class="assign-card">
+        <div class="assign-info">
+          <div class="assign-name">{{ a.title }}</div>
+          <div class="assign-room">🏫 {% for c in classrooms %}{% if c.id == a.classroom_id %}{{ c.name }}{% endif %}{% endfor %}</div>
+        </div>
+        {% if missing == 0 %}
+          <span class="badge badge-ok">✅ ส่งครบ</span>
+        {% else %}
+          <span class="badge badge-warn">⚠️ ขาด {{ missing }} คน</span>
+          <a href="/notify_missing/{{ a.id }}" class="notify-link">🔔 แจ้งเตือน</a>
+        {% endif %}
+        <a href="/delete_assignment/{{ a.id }}" onclick="return confirm('ลบงานนี้?')">
+          <button class="btn btn-red">🗑️ ลบ</button>
+        </a>
+      </div>
+      {% endfor %}
+    {% else %}
+    <div class="empty"><div class="empty-icon">📋</div><p>ยังไม่มีงาน</p></div>
+    {% endif %}
+  </div>
+</div>
+
+<!-- PANEL: POSTS -->
+<div class="panel" id="panel-posts">
+  <div class="section-card">
+    <div class="section-title"><span class="pill pill-cyan">ใหม่</span> โพสต์เนื้อหา / ลิงก์</div>
+    <form method="POST" action="/create_post">
+      <label class="mb8">🏫 ห้องเรียน</label>
+      <select name="classroom_id" class="mb14" required>
+        <option value="">-- เลือกห้องเรียน --</option>
+        {% for c in classrooms %}
+        <option value="{{ c.id }}">{{ c.name }}</option>
+        {% endfor %}
+      </select>
+      <label class="mb8">📌 หัวข้อ</label>
+      <input type="text" name="title" placeholder="เช่น บทเรียนสัปดาห์นี้" class="mb14">
+      <label class="mb8">📝 เนื้อหา</label>
+      <textarea name="content" placeholder="พิมพ์เนื้อหาหรือคำอธิบาย..." class="mb14"></textarea>
+      <label class="mb8">🔗 ลิงก์ (ถ้ามี)</label>
+      <input type="url" name="link" placeholder="https://..." class="mb14">
+      <button type="submit" class="btn btn-cyan btn-full">📢 โพสต์เลย</button>
+    </form>
+  </div>
+
+  {% if posts %}
+  <div class="section-card">
+    <div class="section-title">📝 โพสต์ทั้งหมด</div>
+    {% for p in posts %}
+    <div class="post-card">
+      <div class="post-header">
+        <div>
+          <div class="post-title">{{ p.title }}</div>
+          <div class="post-room">🏫 {% for c in classrooms %}{% if c.id == p.classroom_id %}{{ c.name }}{% endif %}{% endfor %}</div>
+        </div>
+        <a href="/delete_post/{{ p.id }}" onclick="return confirm('ลบโพสต์นี้?')">
+          <button class="btn btn-red">🗑️ ลบ</button>
+        </a>
+      </div>
+      {% if p.content %}<div class="post-content">{{ p.content }}</div>{% endif %}
+      {% if p.link %}
+      <a href="{{ p.link }}" target="_blank" class="post-link-btn">🔗 เปิดลิงก์</a>
+      {% endif %}
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+</div>
+
+<!-- PANEL: GRADING -->
+<div class="panel" id="panel-grade">
+  <div class="search-wrap">
+    <input class="search-input" id="searchInput" type="text" placeholder="ค้นหาชื่อนักเรียนหรืองาน..." oninput="filterSubs()">
+  </div>
+  {% if submissions %}
+  <div id="subList">
+    {% for s in submissions %}
+    <div class="sub-card" data-name="{{ s.student }}" data-assign="{{ s.assignment }}">
+      <div class="sub-header">
+        <div class="sub-avatar">{{ s.student[0]|upper }}</div>
+        <div>
+          <div class="sub-name">{{ s.student }}</div>
+          <div class="sub-assign">📋 {{ s.assignment }}</div>
+        </div>
+        {% if s.score %}<span class="score-badge">⭐ {{ s.score }} คะแนน</span>{% endif %}
+      </div>
+      {% if s.content %}<div class="sub-content">{{ s.content }}</div>{% endif %}
+      {% if s.file %}<a href="/uploads/{{ s.file }}" target="_blank" class="file-link">📂 เปิดไฟล์</a>{% endif %}
+      <form method="POST" action="/grade/{{ s.id }}">
+        <div class="grade-row">
+          <input type="number" name="score" class="grade-input" value="{{ s.score or '' }}" placeholder="0" min="0" max="100">
+          <button type="submit" class="btn btn-purple">💾 บันทึก</button>
+          <a href="/delete_submission/{{ s.id }}" onclick="return confirm('ลบงานที่ส่งนี้?')">
+            <button type="button" class="btn btn-red">🗑️ ลบ</button>
+          </a>
+        </div>
+      </form>
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="empty"><div class="empty-icon">📭</div><p>ยังไม่มีงานส่งมา</p></div>
+  {% endif %}
+</div>
+
+<!-- PANEL: EXPORT -->
+<div class="panel" id="panel-export">
+  <div class="section-card">
+    <div class="section-title"><span class="pill pill-green">Excel</span> ส่งออกคะแนน</div>
+    <div class="export-card">
+      <p>ดาวน์โหลดคะแนนของทุกห้องเรียนเป็นไฟล์ Excel แบ่งตามชีต พร้อมคะแนนรวมและค่าเฉลี่ยอัตโนมัติ</p>
+      <a href="/export_scores">
+        <button class="btn btn-green btn-full">📥 ดาวน์โหลด Excel</button>
+      </a>
+      <div class="export-stats">
+        <div class="export-stat"><div class="export-stat-num">{{ classrooms|length }}</div><div class="export-stat-label">ชีต</div></div>
+        <div class="export-stat"><div class="export-stat-num">{{ assignments|length }}</div><div class="export-stat-label">งาน</div></div>
+        <div class="export-stat"><div class="export-stat-num">{{ submissions|length }}</div><div class="export-stat-label">รายการ</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function switchTab(name) {
+  const names = ['rooms','assign','posts','grade','export'];
+  document.querySelectorAll('.tab').forEach((t,i) => t.classList.toggle('active', names[i]===name));
+  document.querySelectorAll('.panel').forEach(p => p.classList.toggle('active', p.id==='panel-'+name));
+}
+function filterSubs() {
+  const q = document.getElementById('searchInput').value.toLowerCase();
+  document.querySelectorAll('.sub-card').forEach(c => {
+    c.style.display = (c.dataset.name.toLowerCase().includes(q) || c.dataset.assign.toLowerCase().includes(q)) ? '' : 'none';
+  });
+}
+</script>
+</body>
+</html>

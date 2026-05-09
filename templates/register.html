@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>สมัครสมาชิก</title>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Sarabun', sans-serif;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #06b6d4 0%, #6366f1 50%, #ec4899 100%);
+    display: flex; align-items: center; justify-content: center;
+    padding: 20px;
+  }
+  .card {
+    background: white; border-radius: 28px;
+    padding: 36px 28px; width: 100%; max-width: 380px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+  }
+  .logo { text-align: center; margin-bottom: 24px; }
+  .logo .icon { font-size: 52px; display: block; }
+  .logo h1 {
+    font-size: 24px; font-weight: 800;
+    background: linear-gradient(90deg, #06b6d4, #6366f1, #ec4899);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    margin-top: 8px;
+  }
+  label { display: block; font-size: 14px; font-weight: 700; color: #374151; margin-bottom: 6px; }
+  input, select {
+    width: 100%; padding: 14px 16px;
+    border: 2px solid #e5e7eb; border-radius: 14px;
+    font-size: 16px; font-family: 'Sarabun', sans-serif;
+    color: #1f2937; background: #f9fafb;
+    transition: all 0.2s; margin-bottom: 16px; appearance: none;
+  }
+  input:focus, select:focus {
+    outline: none; border-color: #6366f1; background: #fff;
+    box-shadow: 0 0 0 3px rgba(99,102,241,0.1);
+  }
+
+  /* Role Toggle */
+  .role-toggle { display: flex; gap: 10px; margin-bottom: 16px; }
+  .role-btn {
+    flex: 1; padding: 14px 8px;
+    border: 2px solid #e5e7eb; border-radius: 14px;
+    background: #f9fafb; font-size: 15px;
+    font-family: 'Sarabun', sans-serif;
+    cursor: pointer; font-weight: 700; color: #94a3b8;
+    transition: all 0.2s; text-align: center;
+  }
+  .role-btn.active {
+    border-color: #6366f1; background: #eef2ff; color: #6366f1;
+    box-shadow: 0 0 0 3px rgba(99,102,241,0.1);
+  }
+
+  .btn {
+    width: 100%; padding: 16px;
+    background: linear-gradient(90deg, #06b6d4, #6366f1);
+    color: white; border: none; border-radius: 14px;
+    font-size: 17px; font-weight: 800;
+    font-family: 'Sarabun', sans-serif;
+    cursor: pointer; transition: transform 0.15s;
+    box-shadow: 0 4px 15px rgba(99,102,241,0.4);
+    margin-top: 4px;
+  }
+  .btn:active { transform: scale(0.97); }
+  .footer-link { text-align: center; margin-top: 20px; font-size: 14px; color: #94a3b8; }
+  .footer-link a { color: #6366f1; text-decoration: none; font-weight: 700; }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="logo">
+    <span class="icon">✨</span>
+    <h1>สมัครสมาชิก</h1>
+  </div>
+  <form method="POST">
+    <label>👤 ชื่อผู้ใช้</label>
+    <input name="username" placeholder="กรอกชื่อผู้ใช้">
+
+    <label>🔒 รหัสผ่าน</label>
+    <input name="password" type="password" placeholder="กรอกรหัสผ่าน">
+
+    <label>🎭 ฉันคือ...</label>
+    <div class="role-toggle">
+      <div class="role-btn active" onclick="setRole('student', this)">🎓 นักเรียน</div>
+      <div class="role-btn" onclick="setRole('teacher', this)">👨‍🏫 ครู</div>
+    </div>
+    <input type="hidden" name="role" id="role-input" value="student">
+
+    <div id="classroom-div">
+      <label>🏫 ห้องเรียน</label>
+      <select name="classroom_id">
+        <option value="">-- เลือกห้องเรียน --</option>
+        {% for c in classrooms %}
+        <option value="{{ c.id }}">{{ c.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <button class="btn" type="submit">สมัครเลย! 🎉</button>
+  </form>
+  <div class="footer-link">
+    มีบัญชีแล้ว? <a href="/">เข้าสู่ระบบ</a>
+  </div>
+</div>
+<script>
+function setRole(role, el) {
+  document.getElementById('role-input').value = role;
+  document.querySelectorAll('.role-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('classroom-div').style.display = role === 'student' ? 'block' : 'none';
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+@app.route("/teacher")
+def teacher():
+
+    classrooms = Classroom.query.all()
+    assignments = Assignment.query.all()
+    submissions = Submission.query.all()
+
+    return render_template(
+        "teacher.html",
+        classrooms=classrooms,
+        assignments=assignments,
+        submissions=submissions
+    )

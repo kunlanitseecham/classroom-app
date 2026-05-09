@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>เข้าสู่ระบบ</title>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Sarabun', sans-serif;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #f97316 0%, #ec4899 50%, #8b5cf6 100%);
+    display: flex; align-items: center; justify-content: center;
+    padding: 20px;
+  }
+  .card {
+    background: white;
+    border-radius: 28px;
+    padding: 36px 28px;
+    width: 100%; max-width: 380px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+  }
+  .logo { text-align: center; margin-bottom: 28px; }
+  .logo .icon {
+    font-size: 56px; display: block;
+    animation: bounce 1.5s infinite;
+  }
+  @keyframes bounce {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+  .logo h1 {
+    font-size: 24px; font-weight: 800;
+    background: linear-gradient(90deg, #f97316, #ec4899, #8b5cf6);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    margin-top: 8px;
+  }
+  .logo p { font-size: 14px; color: #94a3b8; margin-top: 4px; }
+  label { display: block; font-size: 14px; font-weight: 700; color: #374151; margin-bottom: 6px; }
+  input {
+    width: 100%; padding: 14px 16px;
+    border: 2px solid #e5e7eb; border-radius: 14px;
+    font-size: 16px; font-family: 'Sarabun', sans-serif;
+    color: #1f2937; background: #f9fafb;
+    transition: all 0.2s; margin-bottom: 16px;
+  }
+  input:focus { outline: none; border-color: #ec4899; background: #fff; box-shadow: 0 0 0 3px rgba(236,72,153,0.1); }
+  .btn {
+    width: 100%; padding: 16px;
+    background: linear-gradient(90deg, #f97316, #ec4899);
+    color: white; border: none; border-radius: 14px;
+    font-size: 17px; font-weight: 800;
+    font-family: 'Sarabun', sans-serif;
+    cursor: pointer; transition: transform 0.15s, box-shadow 0.15s;
+    box-shadow: 0 4px 15px rgba(236,72,153,0.4);
+    margin-top: 4px;
+  }
+  .btn:active { transform: scale(0.97); }
+  .footer-link { text-align: center; margin-top: 20px; font-size: 14px; color: #94a3b8; }
+  .footer-link a { color: #ec4899; text-decoration: none; font-weight: 700; }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="logo">
+    <span class="icon">🏫</span>
+    <h1>ระบบห้องเรียน</h1>
+    <p>ยินดีต้อนรับกลับมา!</p>
+  </div>
+  <form method="POST">
+    <label>👤 ชื่อผู้ใช้</label>
+    <input name="username" placeholder="กรอกชื่อผู้ใช้">
+    <label>🔒 รหัสผ่าน</label>
+    <input name="password" type="password" placeholder="กรอกรหัสผ่าน">
+    <button class="btn" type="submit">เข้าสู่ระบบ 🚀</button>
+  </form>
+  <div class="footer-link">
+    ยังไม่มีบัญชี? <a href="/register">สมัครเลย!</a>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,410 @@
+
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Sarabun', sans-serif;
+  min-height: 100vh;
+  background: #f8fafc;
+  color: #1f2937;
+}
+
+.topbar {
+  background: linear-gradient(90deg, #f97316, #ec4899, #8b5cf6);
+  padding: 16px 20px;
+  display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; z-index: 100;
+  box-shadow: 0 4px 20px rgba(236,72,153,0.3);
+}
+.topbar-left { display: flex; align-items: center; gap: 10px; }
+.topbar-avatar {
+  width: 40px; height: 40px; border-radius: 12px;
+  background: rgba(255,255,255,0.3);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; font-weight: 800; color: white; flex-shrink: 0;
+}
+.topbar-name { color: white; font-size: 16px; font-weight: 800; }
+.topbar-role { color: rgba(255,255,255,0.8); font-size: 12px; margin-top: 1px; }
+.logout-btn {
+  padding: 8px 16px;
+  background: rgba(255,255,255,0.25);
+  color: white; border: 1.5px solid rgba(255,255,255,0.4);
+  border-radius: 50px; font-family: 'Sarabun', sans-serif;
+  font-size: 13px; font-weight: 700; cursor: pointer;
+  text-decoration: none; transition: background 0.2s;
+}
+.logout-btn:hover { background: rgba(255,255,255,0.35); }
+
+.stats {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 12px; padding: 20px 16px 0;
+}
+.stat-card {
+  background: white; border-radius: 18px; padding: 16px 12px;
+  text-align: center; box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  border-top: 4px solid transparent;
+}
+.stat-card:nth-child(1) { border-color: #f97316; }
+.stat-card:nth-child(2) { border-color: #ec4899; }
+.stat-card:nth-child(3) { border-color: #8b5cf6; }
+.stat-num { font-size: 26px; font-weight: 800; line-height: 1; }
+.stat-card:nth-child(1) .stat-num { color: #f97316; }
+.stat-card:nth-child(2) .stat-num { color: #ec4899; }
+.stat-card:nth-child(3) .stat-num { color: #8b5cf6; }
+.stat-label { font-size: 11px; color: #94a3b8; margin-top: 4px; font-weight: 600; }
+
+.content { padding: 16px; }
+
+/* Room Banner */
+.room-banner {
+  background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+  border: 2px solid #86efac; border-radius: 16px;
+  padding: 14px 16px; margin-bottom: 16px;
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+}
+.room-banner-info .name { font-size: 15px; font-weight: 800; color: #15803d; }
+.room-banner-info .sub  { font-size: 12px; color: #16a34a; margin-top: 2px; }
+.no-room-banner {
+  background: #fef3c7; border: 2px solid #fcd34d;
+  border-radius: 16px; padding: 14px 16px;
+  font-size: 13px; color: #92400e; text-align: center; margin-bottom: 16px;
+}
+.leave-btn {
+  flex-shrink: 0; padding: 8px 14px;
+  background: #dc2626; color: white; border: none;
+  border-radius: 10px; font-family: 'Sarabun', sans-serif;
+  font-size: 13px; font-weight: 700; cursor: pointer;
+  text-decoration: none; white-space: nowrap; transition: background 0.2s;
+  display: inline-block;
+}
+.leave-btn:hover { background: #b91c1c; }
+
+/* Notification */
+.notif-banner {
+  background: linear-gradient(135deg, #fffbeb, #fef3c7);
+  border: 2px solid #fcd34d;
+  border-radius: 20px; padding: 18px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 12px rgba(252,211,77,0.2);
+}
+.notif-banner-title {
+  font-size: 15px; font-weight: 800; color: #92400e;
+  display: flex; align-items: center; gap: 6px; margin-bottom: 12px;
+}
+.notif-count {
+  background: #f97316; color: white;
+  font-size: 11px; font-weight: 800;
+  padding: 2px 8px; border-radius: 50px;
+}
+.notif-item {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 10px; padding: 10px 12px;
+  background: white; border-radius: 12px;
+  margin-bottom: 8px; border: 1.5px solid #fde68a;
+}
+.notif-item:last-child { margin-bottom: 0; }
+.notif-msg { font-size: 13px; color: #78350f; flex: 1; line-height: 1.5; }
+.notif-read-btn {
+  flex-shrink: 0; padding: 7px 14px;
+  background: linear-gradient(90deg, #f97316, #ec4899);
+  color: white; border: none; border-radius: 10px;
+  font-family: 'Sarabun', sans-serif; font-size: 12px; font-weight: 700;
+  cursor: pointer; white-space: nowrap; text-decoration: none;
+  transition: transform 0.15s; display: inline-block;
+}
+.notif-read-btn:active { transform: scale(0.96); }
+
+/* Post Cards */
+.post-section {
+  background: white; border-radius: 20px;
+  padding: 20px; margin-bottom: 16px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+}
+.post-card {
+  border: 2px solid #e0f2fe; border-radius: 14px;
+  padding: 14px 16px; margin-bottom: 10px; background: #f0f9ff;
+}
+.post-card:last-child { margin-bottom: 0; }
+.post-title { font-size: 15px; font-weight: 800; color: #0c4a6e; margin-bottom: 6px; }
+.post-body  { font-size: 13px; color: #374151; line-height: 1.6; margin-bottom: 8px; }
+.post-link-btn {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 7px 14px; background: #dbeafe; color: #1d4ed8;
+  border-radius: 8px; font-size: 13px; font-weight: 700;
+  text-decoration: none; transition: background 0.2s;
+}
+.post-link-btn:hover { background: #bfdbfe; }
+
+/* Section Card */
+.section-card {
+  background: white; border-radius: 20px;
+  padding: 20px; margin-bottom: 16px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+}
+.section-title {
+  font-size: 15px; font-weight: 800; margin-bottom: 16px;
+  display: flex; align-items: center; gap: 8px; color: #1f2937;
+}
+.pill {
+  display: inline-block; padding: 3px 10px; border-radius: 50px;
+  font-size: 11px; font-weight: 700; color: white;
+}
+.pill-orange { background: linear-gradient(90deg, #f97316, #ec4899); }
+.pill-pink   { background: linear-gradient(90deg, #ec4899, #8b5cf6); }
+
+label { display: block; font-size: 13px; font-weight: 700; color: #374151; margin-bottom: 6px; }
+.form-group { margin-bottom: 14px; }
+select, textarea {
+  width: 100%; padding: 12px 14px;
+  border: 2px solid #e5e7eb; border-radius: 12px;
+  font-size: 15px; font-family: 'Sarabun', sans-serif;
+  color: #1f2937; background: #f9fafb;
+  transition: all 0.2s; outline: none; -webkit-appearance: none;
+}
+select:focus, textarea:focus {
+  border-color: #ec4899; background: #fff;
+  box-shadow: 0 0 0 3px rgba(236,72,153,0.1);
+}
+textarea { resize: vertical; min-height: 90px; line-height: 1.6; }
+
+.file-upload {
+  display: flex; align-items: center; gap: 10px;
+  padding: 12px 14px;
+  border: 2px dashed #e5e7eb; border-radius: 12px;
+  background: #f9fafb; cursor: pointer; transition: all 0.2s;
+}
+.file-upload:hover { border-color: #ec4899; background: #fff0f6; }
+.file-upload input[type=file] { display: none; }
+.file-upload-text { font-size: 14px; color: #94a3b8; }
+.file-upload-text.selected { color: #ec4899; font-weight: 700; }
+
+.btn {
+  width: 100%; padding: 15px;
+  background: linear-gradient(90deg, #f97316, #ec4899);
+  color: white; border: none; border-radius: 14px;
+  font-size: 16px; font-weight: 800;
+  font-family: 'Sarabun', sans-serif;
+  cursor: pointer; transition: transform 0.15s, box-shadow 0.15s;
+  box-shadow: 0 4px 15px rgba(236,72,153,0.4);
+  margin-top: 4px;
+}
+.btn:active { transform: scale(0.97); }
+
+/* Submission Cards */
+.sub-card {
+  border: 2px solid #f3f4f6; border-radius: 16px;
+  padding: 14px 16px; margin-bottom: 10px;
+  background: #fafafa; transition: border-color 0.2s;
+}
+.sub-card:hover { border-color: #e5e7eb; }
+.sub-header { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+.sub-icon {
+  width: 38px; height: 38px; border-radius: 10px; flex-shrink: 0;
+  background: linear-gradient(135deg, rgba(249,115,22,0.15), rgba(236,72,153,0.15));
+  display: flex; align-items: center; justify-content: center; font-size: 16px;
+}
+.sub-name { font-size: 15px; font-weight: 700; }
+.sub-score {
+  margin-left: auto; padding: 5px 12px; border-radius: 50px;
+  font-size: 13px; font-weight: 800;
+}
+.score-has {
+  background: linear-gradient(90deg,rgba(139,92,246,0.1),rgba(99,102,241,0.1));
+  color: #8b5cf6; border: 1.5px solid rgba(139,92,246,0.2);
+}
+.score-none { background: #f3f4f6; color: #94a3b8; border: 1.5px solid #e5e7eb; }
+.sub-content {
+  font-size: 13px; color: #6b7280;
+  background: white; border: 1.5px solid #e5e7eb;
+  border-radius: 10px; padding: 8px 12px;
+  margin-bottom: 8px; line-height: 1.6;
+}
+.file-link {
+  display: inline-flex; align-items: center; gap: 5px;
+  color: #8b5cf6; font-size: 13px; font-weight: 700;
+  text-decoration: none; padding: 5px 12px;
+  background: rgba(139,92,246,0.1); border-radius: 8px;
+  transition: background 0.2s; margin-bottom: 8px;
+}
+.file-link:hover { background: rgba(139,92,246,0.18); }
+.delete-sub-btn {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 7px 14px; background: #fee2e2; color: #dc2626;
+  border: 1.5px solid #fca5a5; border-radius: 8px;
+  font-size: 13px; font-weight: 700; text-decoration: none;
+  transition: background 0.2s; margin-top: 4px;
+}
+.delete-sub-btn:hover { background: #fecaca; }
+
+.empty { text-align: center; padding: 32px; color: #94a3b8; }
+.empty-icon { font-size: 40px; margin-bottom: 8px; }
+.empty p { font-size: 14px; }
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="topbar-left">
+    <div class="topbar-avatar">{{ session['username'][0]|upper }}</div>
+    <div>
+      <div class="topbar-name">{{ session['username'] }}</div>
+      <div class="topbar-role">🎓 นักเรียน</div>
+    </div>
+  </div>
+  <a href="/logout" class="logout-btn">ออกจากระบบ</a>
+</div>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat-card">
+    <div class="stat-num">{{ assignments|length }}</div>
+    <div class="stat-label">📋 งานทั้งหมด</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-num">{{ submissions|length }}</div>
+    <div class="stat-label">📤 ส่งแล้ว</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-num">{{ notifications|length }}</div>
+    <div class="stat-label">🔔 แจ้งเตือน</div>
+  </div>
+</div>
+
+<div class="content">
+
+  <!-- ห้องเรียน -->
+  {% if current_user and current_user.classroom_id %}
+  <div class="room-banner">
+    <div class="room-banner-info">
+      <div class="name">🏫 {{ classroom_name }}</div>
+      <div class="sub">คุณอยู่ในห้องนี้แล้ว</div>
+    </div>
+    <a href="/leave_classroom"
+       onclick="return confirm('ออกจากห้องเรียนนี้?')"
+       class="leave-btn">🚪 ออกจากห้อง</a>
+  </div>
+  {% else %}
+  <div class="no-room-banner">⚠️ คุณยังไม่ได้อยู่ในห้องเรียน กรุณาติดต่อครู</div>
+  {% endif %}
+
+  <!-- NOTIFICATIONS -->
+  {% if notifications %}
+  <div class="notif-banner">
+    <div class="notif-banner-title">
+      🔔 การแจ้งเตือน
+      <span class="notif-count">{{ notifications|length }}</span>
+    </div>
+    {% for n in notifications %}
+    <div class="notif-item">
+      <div class="notif-msg">⚠️ {{ n.message }}</div>
+      <a href="/read_notification/{{ n.id }}" class="notif-read-btn">อ่านแล้ว ✓</a>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <!-- POSTS FROM TEACHER -->
+  {% if posts %}
+  <div class="post-section">
+    <div class="section-title">📢 เนื้อหาจากครู</div>
+    {% for p in posts %}
+    <div class="post-card">
+      <div class="post-title">{{ p.title }}</div>
+      {% if p.content %}<div class="post-body">{{ p.content }}</div>{% endif %}
+      {% if p.link %}
+      <a href="{{ p.link }}" target="_blank" class="post-link-btn">🔗 เปิดลิงก์</a>
+      {% endif %}
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <!-- SUBMIT FORM -->
+  <div class="section-card">
+    <div class="section-title">
+      <span class="pill pill-orange">ส่งงาน</span> 📤 ส่งงานใหม่
+    </div>
+    <form action="/submit" method="POST" enctype="multipart/form-data">
+      <div class="form-group">
+        <label>📋 เลือกงาน</label>
+        <select name="assignment" required>
+          <option value="">-- เลือกชื่องาน --</option>
+          {% for a in assignments %}
+          <option value="{{ a.title }}">{{ a.title }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="form-group">
+        <label>📝 เนื้อหา / คำอธิบาย</label>
+        <textarea name="content" placeholder="พิมพ์คำตอบหรือรายละเอียดที่นี่..."></textarea>
+      </div>
+      <div class="form-group">
+        <label>📎 แนบไฟล์ (ถ้ามี)</label>
+        <label class="file-upload" id="fileLabel">
+          <span style="font-size:20px">📁</span>
+          <span class="file-upload-text" id="fileText">แตะเพื่อเลือกไฟล์</span>
+          <input type="file" name="file" id="fileInput" onchange="updateFile(this)">
+        </label>
+      </div>
+      <button type="submit" class="btn">📤 ส่งงาน</button>
+    </form>
+  </div>
+
+  <!-- SUBMISSION HISTORY -->
+  <div class="section-card">
+    <div class="section-title">
+      <span class="pill pill-pink">ประวัติ</span> 📂 งานที่ส่งแล้ว
+    </div>
+    {% if submissions %}
+      {% for s in submissions %}
+      <div class="sub-card">
+        <div class="sub-header">
+          <div class="sub-icon">📄</div>
+          <div class="sub-name">{{ s.assignment }}</div>
+          {% if s.score %}
+          <span class="sub-score score-has">⭐ {{ s.score }} คะแนน</span>
+          {% else %}
+          <span class="sub-score score-none">รอตรวจ</span>
+          {% endif %}
+        </div>
+        {% if s.content %}
+        <div class="sub-content">{{ s.content }}</div>
+        {% endif %}
+        {% if s.file %}
+        <a href="/uploads/{{ s.file }}" target="_blank" class="file-link">📂 {{ s.file }}</a>
+        {% endif %}
+        <br>
+        <a href="/student_delete/{{ s.id }}"
+           onclick="return confirm('ลบงานที่ส่งนี้?')"
+           class="delete-sub-btn">🗑️ ลบงาน</a>
+      </div>
+      {% endfor %}
+    {% else %}
+    <div class="empty"><div class="empty-icon">📭</div><p>ยังไม่มีงานส่ง</p></div>
+    {% endif %}
+  </div>
+
+</div>
+
+<script>
+function updateFile(input) {
+  const text = document.getElementById('fileText');
+  if (input.files[0]) {
+    text.textContent = input.files[0].name;
+    text.classList.add('selected');
+  } else {
+    text.textContent = 'แตะเพื่อเลือกไฟล์';
+    text.classList.remove('selected');
+  }
+}
+</script>
+</body>
+</html>
