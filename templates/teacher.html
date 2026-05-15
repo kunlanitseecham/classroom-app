@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="th">
 <head>
@@ -16,13 +17,13 @@ body {
 }
 
 .topbar {
-  background: linear-gradient(90deg, #f97316, #ec4899, #8b5cf6);
+  background: linear-gradient(90deg, #92400e, #b45309, #78350f);
   padding: 16px 20px;
   display: flex; align-items: center; justify-content: space-between;
   position: sticky; top: 0; z-index: 100;
-  box-shadow: 0 4px 20px rgba(236,72,153,0.3);
+  box-shadow: 0 4px 20px rgba(120,53,15,0.35);
 }
-.topbar-title { color: white; font-size: 18px; font-weight: 800; display: flex; align-items: center; gap: 8px; }
+.topbar-title { color: #fef3c7; font-size: 18px; font-weight: 800; display: flex; align-items: center; gap: 8px; }
 
 .stats {
   display: grid; grid-template-columns: repeat(4, 1fr);
@@ -35,15 +36,15 @@ body {
   box-shadow: 0 2px 12px rgba(0,0,0,0.07);
   border-top: 4px solid transparent;
 }
-.stat-card:nth-child(1) { border-color: #f97316; }
-.stat-card:nth-child(2) { border-color: #ec4899; }
-.stat-card:nth-child(3) { border-color: #8b5cf6; }
-.stat-card:nth-child(4) { border-color: #ef4444; }
+.stat-card:nth-child(1) { border-color: #b45309; }
+.stat-card:nth-child(2) { border-color: #d97706; }
+.stat-card:nth-child(3) { border-color: #92400e; }
+.stat-card:nth-child(4) { border-color: #dc2626; }
 .stat-num { font-size: 28px; font-weight: 800; line-height: 1; }
-.stat-card:nth-child(1) .stat-num { color: #f97316; }
-.stat-card:nth-child(2) .stat-num { color: #ec4899; }
-.stat-card:nth-child(3) .stat-num { color: #8b5cf6; }
-.stat-card:nth-child(4) .stat-num { color: #ef4444; }
+.stat-card:nth-child(1) .stat-num { color: #b45309; }
+.stat-card:nth-child(2) .stat-num { color: #d97706; }
+.stat-card:nth-child(3) .stat-num { color: #92400e; }
+.stat-card:nth-child(4) .stat-num { color: #dc2626; }
 .stat-label { font-size: 12px; color: #94a3b8; margin-top: 4px; font-weight: 600; }
 
 .tabs {
@@ -60,9 +61,9 @@ body {
   color: #94a3b8; transition: all 0.2s;
 }
 .tab.active {
-  background: linear-gradient(90deg, #ec4899, #8b5cf6);
+  background: linear-gradient(90deg, #92400e, #b45309);
   color: white; border-color: transparent;
-  box-shadow: 0 4px 14px rgba(236,72,153,0.35);
+  box-shadow: 0 4px 14px rgba(180,83,9,0.35);
 }
 
 .panel { display: none; padding: 16px; }
@@ -81,10 +82,10 @@ body {
   display: inline-block; padding: 3px 10px; border-radius: 50px;
   font-size: 11px; font-weight: 700; color: white;
 }
-.pill-orange { background: linear-gradient(90deg,#f97316,#ec4899); }
-.pill-pink   { background: linear-gradient(90deg,#ec4899,#8b5cf6); }
+.pill-orange { background: linear-gradient(90deg,#b45309,#d97706); }
+.pill-brown  { background: linear-gradient(90deg,#92400e,#b45309); }
 .pill-green  { background: linear-gradient(90deg,#10b981,#059669); }
-.pill-cyan   { background: linear-gradient(90deg,#06b6d4,#3b82f6); }
+.pill-cyan   { background: linear-gradient(90deg,#0369a1,#0284c7); }
 
 label { display: block; font-size: 13px; font-weight: 700; color: #374151; margin-bottom: 6px; }
 input[type=text], input[type=number], input[type=url], select, textarea {
@@ -96,8 +97,8 @@ input[type=text], input[type=number], input[type=url], select, textarea {
 }
 textarea { resize: vertical; min-height: 80px; line-height: 1.6; }
 input[type=text]:focus, input[type=number]:focus, input[type=url]:focus, select:focus, textarea:focus {
-  border-color: #ec4899; background: #fff;
-  box-shadow: 0 0 0 3px rgba(236,72,153,0.1);
+  border-color: #b45309; background: #fff;
+  box-shadow: 0 0 0 3px rgba(180,83,9,0.1);
 }
 .mb8  { margin-bottom: 8px; }
 .mb14 { margin-bottom: 14px; }
@@ -106,18 +107,18 @@ input[type=text]:focus, input[type=number]:focus, input[type=url]:focus, select:
 
 .btn {
   padding: 12px 20px;
-  background: linear-gradient(90deg, #f97316, #ec4899);
+  background: linear-gradient(90deg, #92400e, #b45309);
   color: white; border: none; border-radius: 12px;
   font-size: 14px; font-weight: 800;
   font-family: 'Sarabun', sans-serif;
   cursor: pointer; transition: transform 0.15s, box-shadow 0.15s;
-  box-shadow: 0 4px 14px rgba(236,72,153,0.35);
+  box-shadow: 0 4px 14px rgba(180,83,9,0.35);
   white-space: nowrap;
 }
 .btn:active { transform: scale(0.97); }
-.btn-purple { background: linear-gradient(90deg, #8b5cf6, #6366f1); box-shadow: 0 4px 14px rgba(139,92,246,0.35); }
+.btn-purple { background: linear-gradient(90deg, #78350f, #92400e); box-shadow: 0 4px 14px rgba(120,53,15,0.35); }
 .btn-green  { background: linear-gradient(90deg, #10b981, #059669); box-shadow: 0 4px 14px rgba(16,185,129,0.3); }
-.btn-cyan   { background: linear-gradient(90deg, #06b6d4, #3b82f6); box-shadow: 0 4px 14px rgba(6,182,212,0.3); }
+.btn-cyan   { background: linear-gradient(90deg, #0369a1, #0284c7); box-shadow: 0 4px 14px rgba(3,105,161,0.3); }
 .btn-red    { background: #dc2626; box-shadow: 0 4px 14px rgba(220,38,38,0.3); padding: 8px 14px; font-size: 13px; }
 .btn-full   { width: 100%; padding: 14px; font-size: 16px; }
 
@@ -127,12 +128,12 @@ input[type=text]:focus, input[type=number]:focus, input[type=url]:focus, select:
   padding: 16px; margin-bottom: 12px; background: #fafafa;
   transition: border-color 0.2s;
 }
-.room-card:hover { border-color: #ec4899; }
+.room-card:hover { border-color: #b45309; }
 .room-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
 .room-name { font-size: 16px; font-weight: 800; }
 .room-count {
-  background: linear-gradient(90deg,rgba(236,72,153,0.1),rgba(139,92,246,0.1));
-  color: #ec4899; border: 1.5px solid rgba(236,72,153,0.2);
+  background: linear-gradient(90deg,rgba(180,83,9,0.1),rgba(217,119,6,0.1));
+  color: #b45309; border: 1.5px solid rgba(180,83,9,0.2);
   padding: 4px 12px; border-radius: 50px; font-size: 12px; font-weight: 700;
 }
 .student-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
@@ -145,15 +146,6 @@ input[type=text]:focus, input[type=number]:focus, input[type=url]:focus, select:
 .no-student { font-size: 13px; color: #94a3b8; margin-bottom: 10px; }
 .room-actions { display: flex; justify-content: flex-end; }
 
-.chip-list { display: flex; flex-wrap: wrap; gap: 8px; }
-.chip {
-  display: flex; align-items: center; gap: 6px;
-  padding: 8px 14px; border-radius: 50px;
-  background: linear-gradient(90deg,rgba(249,115,22,0.1),rgba(236,72,153,0.1));
-  border: 1.5px solid rgba(236,72,153,0.2);
-  font-size: 13px; font-weight: 700; color: #ec4899;
-}
-
 /* Assignment Cards */
 .assign-card {
   border: 2px solid #f3f4f6; border-radius: 16px;
@@ -161,7 +153,7 @@ input[type=text]:focus, input[type=number]:focus, input[type=url]:focus, select:
   display: flex; align-items: center; gap: 10px;
   background: #fafafa; transition: border-color 0.2s; flex-wrap: wrap;
 }
-.assign-card:hover { border-color: #ec4899; }
+.assign-card:hover { border-color: #b45309; }
 .assign-info { flex: 1; min-width: 0; }
 .assign-name { font-size: 15px; font-weight: 700; }
 .assign-room { font-size: 12px; color: #94a3b8; margin-top: 2px; }
@@ -170,30 +162,30 @@ input[type=text]:focus, input[type=number]:focus, input[type=url]:focus, select:
 .badge-warn { background: #fee2e2; color: #dc2626; }
 .notify-link {
   flex-shrink: 0; padding: 8px 12px;
-  background: #fff7ed; border: 1.5px solid #fed7aa;
+  background: #fef3c7; border: 1.5px solid #fde68a;
   border-radius: 10px; font-size: 12px; font-weight: 700;
-  color: #f97316; text-decoration: none; white-space: nowrap; transition: background 0.2s;
+  color: #b45309; text-decoration: none; white-space: nowrap; transition: background 0.2s;
 }
-.notify-link:hover { background: #ffedd5; }
+.notify-link:hover { background: #fde68a; }
 
 /* Post Cards */
 .post-card {
-  border: 2px solid #e0f2fe; border-radius: 16px;
-  padding: 14px 16px; margin-bottom: 10px; background: #f0f9ff;
+  border: 2px solid #fde68a; border-radius: 16px;
+  padding: 14px 16px; margin-bottom: 10px; background: #fffbeb;
   transition: border-color 0.2s;
 }
-.post-card:hover { border-color: #06b6d4; }
+.post-card:hover { border-color: #b45309; }
 .post-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; margin-bottom: 8px; }
-.post-title { font-size: 15px; font-weight: 800; color: #0c4a6e; }
-.post-room { font-size: 12px; color: #0369a1; margin-top: 2px; }
+.post-title { font-size: 15px; font-weight: 800; color: #78350f; }
+.post-room { font-size: 12px; color: #92400e; margin-top: 2px; }
 .post-content { font-size: 13px; color: #374151; line-height: 1.6; margin-bottom: 8px; }
 .post-link-btn {
   display: inline-flex; align-items: center; gap: 5px;
-  padding: 6px 14px; background: #dbeafe; color: #1d4ed8;
+  padding: 6px 14px; background: #fef3c7; color: #92400e;
   border-radius: 8px; font-size: 13px; font-weight: 700;
-  text-decoration: none; transition: background 0.2s;
+  text-decoration: none; border: 1.5px solid #fde68a; transition: background 0.2s;
 }
-.post-link-btn:hover { background: #bfdbfe; }
+.post-link-btn:hover { background: #fde68a; }
 
 /* Submission Cards */
 .sub-card {
@@ -203,7 +195,7 @@ input[type=text]:focus, input[type=number]:focus, input[type=url]:focus, select:
 .sub-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
 .sub-avatar {
   width: 40px; height: 40px; border-radius: 12px;
-  background: linear-gradient(135deg,#f97316,#ec4899);
+  background: linear-gradient(135deg,#92400e,#b45309);
   display: flex; align-items: center; justify-content: center;
   font-size: 16px; font-weight: 800; color: white; flex-shrink: 0;
 }
@@ -211,9 +203,9 @@ input[type=text]:focus, input[type=number]:focus, input[type=url]:focus, select:
 .sub-assign { font-size: 12px; color: #94a3b8; margin-top: 1px; }
 .score-badge {
   margin-left: auto; padding: 5px 12px; border-radius: 50px;
-  background: linear-gradient(90deg,rgba(139,92,246,0.1),rgba(99,102,241,0.1));
-  color: #8b5cf6; font-size: 13px; font-weight: 800;
-  border: 1.5px solid rgba(139,92,246,0.2);
+  background: linear-gradient(90deg,rgba(180,83,9,0.1),rgba(217,119,6,0.1));
+  color: #b45309; font-size: 13px; font-weight: 800;
+  border: 1.5px solid rgba(180,83,9,0.2);
 }
 .sub-content {
   font-size: 13px; color: #6b7280; background: #f9fafb;
@@ -222,12 +214,13 @@ input[type=text]:focus, input[type=number]:focus, input[type=url]:focus, select:
 }
 .file-link {
   display: inline-flex; align-items: center; gap: 5px;
-  color: #8b5cf6; font-size: 13px; font-weight: 700;
+  color: #b45309; font-size: 13px; font-weight: 700;
   text-decoration: none; padding: 6px 12px;
-  background: rgba(139,92,246,0.1); border-radius: 8px;
+  background: rgba(180,83,9,0.08); border-radius: 8px;
   margin-bottom: 10px; transition: background 0.2s;
+  border: 1.5px solid rgba(180,83,9,0.15);
 }
-.file-link:hover { background: rgba(139,92,246,0.18); }
+.file-link:hover { background: rgba(180,83,9,0.15); }
 .grade-row { display: flex; align-items: center; gap: 8px; }
 .grade-input { width: 90px !important; text-align: center; font-weight: 700 !important; font-size: 16px !important; }
 
@@ -239,7 +232,7 @@ input[type=text]:focus, input[type=number]:focus, input[type=url]:focus, select:
   font-size: 14px; font-family: 'Sarabun', sans-serif;
   background: white; color: #1f2937; outline: none; transition: all 0.2s;
 }
-.search-input:focus { border-color: #ec4899; box-shadow: 0 0 0 3px rgba(236,72,153,0.1); }
+.search-input:focus { border-color: #b45309; box-shadow: 0 0 0 3px rgba(180,83,9,0.1); }
 
 .export-card {
   background: linear-gradient(135deg,#f0fdf4,#dcfce7);
@@ -258,13 +251,11 @@ input[type=text]:focus, input[type=number]:focus, input[type=url]:focus, select:
 </head>
 <body>
 
-<!-- TOPBAR -->
 <div class="topbar">
   <div class="topbar-title">👩‍🏫 Teacher Dashboard</div>
-  <a href="/logout" style="color:white;font-size:13px;text-decoration:none;">ออกจากระบบ</a>
+  <a href="/logout" style="color:#fef3c7;font-size:13px;text-decoration:none;font-weight:700;">ออกจากระบบ</a>
 </div>
 
-<!-- STATS -->
 <div class="stats">
   <div class="stat-card">
     <div class="stat-num">{{ classrooms|length }}</div>
@@ -284,7 +275,6 @@ input[type=text]:focus, input[type=number]:focus, input[type=url]:focus, select:
   </div>
 </div>
 
-<!-- TABS -->
 <div class="tabs">
   <button class="tab active" onclick="switchTab('rooms')">🏫 ห้องเรียน</button>
   <button class="tab" onclick="switchTab('assign')">📋 งาน</button>
@@ -304,7 +294,6 @@ input[type=text]:focus, input[type=number]:focus, input[type=url]:focus, select:
       </div>
     </form>
   </div>
-
   <div class="section-card">
     <div class="section-title">🏫 ห้องเรียนทั้งหมด</div>
     {% if classrooms %}
@@ -324,8 +313,7 @@ input[type=text]:focus, input[type=number]:focus, input[type=url]:focus, select:
         <div class="no-student">ยังไม่มีนักเรียนในห้องนี้</div>
         {% endif %}
         <div class="room-actions">
-          <a href="/delete_classroom/{{ c.id }}"
-             onclick="return confirm('ลบห้อง {{ c.name }}? นักเรียนในห้องจะถูกย้ายออก')">
+          <a href="/delete_classroom/{{ c.id }}" onclick="return confirm('ลบห้อง {{ c.name }}? นักเรียนในห้องจะถูกย้ายออก')">
             <button class="btn btn-red">🗑️ ลบห้อง</button>
           </a>
         </div>
@@ -340,22 +328,19 @@ input[type=text]:focus, input[type=number]:focus, input[type=url]:focus, select:
 <!-- PANEL: ASSIGNMENTS -->
 <div class="panel" id="panel-assign">
   <div class="section-card">
-    <div class="section-title"><span class="pill pill-pink">ใหม่</span> มอบหมายงาน</div>
+    <div class="section-title"><span class="pill pill-brown">ใหม่</span> มอบหมายงาน</div>
     <form method="POST" action="/create_assignment">
       <label class="mb8">📝 ชื่องาน</label>
       <input type="text" name="title" placeholder="เช่น แบบฝึกหัดบทที่ 1" class="mb8">
       <div class="form-row">
         <select name="classroom_id" required>
           <option value="">-- เลือกห้องเรียน --</option>
-          {% for c in classrooms %}
-          <option value="{{ c.id }}">{{ c.name }}</option>
-          {% endfor %}
+          {% for c in classrooms %}<option value="{{ c.id }}">{{ c.name }}</option>{% endfor %}
         </select>
         <button type="submit" class="btn">➕ สร้าง</button>
       </div>
     </form>
   </div>
-
   <div class="section-card">
     <div class="section-title">📋 งานที่มอบหมาย</div>
     {% if assignments %}
@@ -391,9 +376,7 @@ input[type=text]:focus, input[type=number]:focus, input[type=url]:focus, select:
       <label class="mb8">🏫 ห้องเรียน</label>
       <select name="classroom_id" class="mb14" required>
         <option value="">-- เลือกห้องเรียน --</option>
-        {% for c in classrooms %}
-        <option value="{{ c.id }}">{{ c.name }}</option>
-        {% endfor %}
+        {% for c in classrooms %}<option value="{{ c.id }}">{{ c.name }}</option>{% endfor %}
       </select>
       <label class="mb8">📌 หัวข้อ</label>
       <input type="text" name="title" placeholder="เช่น บทเรียนสัปดาห์นี้" class="mb14">
@@ -404,7 +387,6 @@ input[type=text]:focus, input[type=number]:focus, input[type=url]:focus, select:
       <button type="submit" class="btn btn-cyan btn-full">📢 โพสต์เลย</button>
     </form>
   </div>
-
   {% if posts %}
   <div class="section-card">
     <div class="section-title">📝 โพสต์ทั้งหมด</div>
@@ -420,9 +402,7 @@ input[type=text]:focus, input[type=number]:focus, input[type=url]:focus, select:
         </a>
       </div>
       {% if p.content %}<div class="post-content">{{ p.content }}</div>{% endif %}
-      {% if p.link %}
-      <a href="{{ p.link }}" target="_blank" class="post-link-btn">🔗 เปิดลิงก์</a>
-      {% endif %}
+      {% if p.link %}<a href="{{ p.link }}" target="_blank" class="post-link-btn">🔗 เปิดลิงก์</a>{% endif %}
     </div>
     {% endfor %}
   </div>
