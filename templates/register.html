@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="th">
 <head>
@@ -39,8 +40,6 @@
     outline: none; border-color: #6366f1; background: #fff;
     box-shadow: 0 0 0 3px rgba(99,102,241,0.1);
   }
-
-  /* Role Toggle */
   .role-toggle { display: flex; gap: 10px; margin-bottom: 16px; }
   .role-btn {
     flex: 1; padding: 14px 8px;
@@ -54,7 +53,6 @@
     border-color: #6366f1; background: #eef2ff; color: #6366f1;
     box-shadow: 0 0 0 3px rgba(99,102,241,0.1);
   }
-
   .btn {
     width: 100%; padding: 16px;
     background: linear-gradient(90deg, #06b6d4, #6366f1);
@@ -79,17 +77,14 @@
   <form method="POST">
     <label>👤 ชื่อผู้ใช้</label>
     <input name="username" placeholder="กรอกชื่อผู้ใช้">
-
     <label>🔒 รหัสผ่าน</label>
     <input name="password" type="password" placeholder="กรอกรหัสผ่าน">
-
     <label>🎭 ฉันคือ...</label>
     <div class="role-toggle">
       <div class="role-btn active" onclick="setRole('student', this)">🎓 นักเรียน</div>
       <div class="role-btn" onclick="setRole('teacher', this)">👨‍🏫 ครู</div>
     </div>
     <input type="hidden" name="role" id="role-input" value="student">
-
     <div id="classroom-div">
       <label>🏫 ห้องเรียน</label>
       <select name="classroom_id">
@@ -99,7 +94,6 @@
         {% endfor %}
       </select>
     </div>
-
     <button class="btn" type="submit">สมัครเลย! 🎉</button>
   </form>
   <div class="footer-link">
